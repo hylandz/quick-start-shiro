@@ -19,7 +19,7 @@ import java.util.Map;
  *
  * @author xielx at 2020/4/21 17:47
  */
-public class MybatisPlusGenerator {
+public class MyBatisPlusGenerator {
     
     
     public static void main(String[] args) {

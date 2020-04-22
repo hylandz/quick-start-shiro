@@ -14,6 +14,15 @@
 
 
     <dependencies>
+        <!--引入shiro-system模块-->
+        <dependency>
+            <groupId>com.xlx</groupId>
+            <artifactId>shiro-system</artifactId>
+            <version>${quick-start-shiro.version}</version>
+        </dependency>
+
+
+
         <!--验证码 -->
         <dependency>
             <groupId>com.github.penggle</groupId>
