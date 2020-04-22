@@ -1,0 +1,71 @@
+package com.xlx.system.entity;
+
+import com.xlx.system.entity.BaseEntity;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author xlx
+ * @since 2020-04-22
+ */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+@TableName("sys_menu")
+public class Menu extends BaseEntity<Menu> {
+
+    private static final long serialVersionUID=1L;
+
+    /**
+     * 主键
+     */
+    @TableId(value = "menu_id", type = IdType.AUTO)
+    private Long menuId;
+
+    /**
+     * 资源名称
+     */
+    private String menuName;
+
+    /**
+     * 图标
+     */
+    private String icon;
+
+    /**
+     * 菜单类型,菜单:1;按钮:0
+     */
+    private Boolean type;
+
+    /**
+     * 资源url
+     */
+    private String url;
+
+    /**
+     * 父节点id
+     */
+    private Long parentId;
+
+    /**
+     * 资源权限
+     */
+    private String permis;
+
+
+    @Override
+    protected Serializable pkVal() {
+        return this.menuId;
+    }
+
+}

@@ -1,0 +1,9 @@
+# 服务端口
+server:
+  port: 8887
+
+
+# spring
+spring:
+  datasource:
+    driver-class-name:

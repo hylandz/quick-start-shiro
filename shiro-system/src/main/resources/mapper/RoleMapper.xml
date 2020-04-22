@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xlx.system.dao.RoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xlx.system.entity.Role">
+        <id column="role_id" property="roleId" />
+    <result column="status" property="status" />
+    <result column="gmt_create" property="gmtCreate" />
+    <result column="gmt_modified" property="gmtModified" />
+        <result column="role_key" property="roleKey" />
+        <result column="role_name" property="roleName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        status,
+        gmt_create,
+        gmt_modified,
+        role_id, role_key, role_name
+    </sql>
+
+</mapper>
