@@ -96,7 +96,7 @@ public class User extends BaseEntity<User> {
     /**
      * 逻辑删除,0:删除;1:未删除
      */
-    private Boolean delFlag;
+    private Integer delFlag;
 
     /**
      * 最后登录ip
@@ -107,7 +107,16 @@ public class User extends BaseEntity<User> {
      * 最后登录时间
      */
     private LocalDateTime loginDate;
-
+    
+    
+    /**
+     * 获取组合盐
+     * @return salt = username + salt
+     */
+    public String getCredentials(){
+        return this.userName + this.salt;
+    }
+    
 
     @Override
     protected Serializable pkVal() {
