@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache name="fastshiro">
+
+    <!-- 磁盘缓存位置 -->
+    <diskStore path="java.io.tmpdir"/>
+
+    <!-- 默认缓存 -->
+    <defaultCache
+            maxEntriesLocalHeap="1000"
+            eternal="false"
+            timeToIdleSeconds="3600"
+            timeToLiveSeconds="3600"
+            overflowToDisk="false">
+    </defaultCache>
+
+    <!-- 登录记录缓存 锁定10分钟 -->
+    <cache name="loginRecordCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+    <!--
+    maxElementsInMemory: 在内存中缓存的最大对象数量
+    maxEntriesLocalHeap: 当内存中对象数量达到maxElementsInMemory时，Ehcache将会对象写到磁盘中
+    eternal: 设定缓存对象保存的永久属性,默认为 false.当为 true 时 timeToIdleSeconds、timeToLiveSeconds 失效。
+    timeToIdleSeconds: 对象空闲时间(单位:秒),指对象在多长时间没有被访问就会失效。只对eternal为false的有效。默认值0，表示一直可以访问。
+    timeToLiveSeconds: 对象存活时间(单位：秒)，指对象从创建到失效所需要的时间。只对eternal为false的有效。默认值0，表示一直可以访问。
+    overflowToDisk: 如果内存中数据超过内存限制，是否要缓存到磁盘上。
+    statistics: 统计信息
+    -->
+</ehcache>
