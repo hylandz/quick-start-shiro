@@ -13,7 +13,9 @@ import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
+import org.apache.shiro.session.mgt.eis.SessionIdGenerator;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
@@ -21,6 +23,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -85,13 +88,39 @@ public class ShiroConfig {
         return credentialsMatcher;
     }
     
+    
+    /**
+     * 会话ID生成器
+     * @return UUID
+     */
+    public SessionIdGenerator sessionIdGenerator(){
+        return new JavaUuidSessionIdGenerator();
+    }
+    
+    /**
+     * SessionCookie
+     * @return Session的cookie
+     */
+    public SimpleCookie sessionIdCookie(){
+        SimpleCookie sessionIdCookie = new SimpleCookie("sid");
+        sessionIdCookie.setHttpOnly(true);
+        // 默认值为-1,表示浏览器关闭就失效
+        sessionIdCookie.setMaxAge(-1);
+        
+        return sessionIdCookie;
+    }
+    
     /**
      * SessionDAO
      * 进行Session的CRUD管理
      * @return SessionDAO
      */
     public SessionDAO sessionDAO(){
-        return new OnlineSessionDAO();
+        OnlineSessionDAO sessionDAO = new OnlineSessionDAO();
+        //
+        //sessionDAO.setActiveSessionsCacheName("shiro-activeSessionCache");
+        //sessionDAO.setSessionIdGenerator(sessionIdGenerator());
+        return sessionDAO;
     }
     
     /**
@@ -118,8 +147,11 @@ public class ShiroConfig {
         //manager.setSessionValidationScheduler();
         // 定时检查session
         //manager.setSessionValidationSchedulerEnabled(true);
+        //
+        //manager.setSessionIdCookieEnabled(true);
+        //manager.setSessionIdCookie(sessionIdCookie());
         // sessionDAO
-        manager.setSessionDAO(sessionDAO());
+       // manager.setSessionDAO(sessionDAO());
         
         return manager;
     }
