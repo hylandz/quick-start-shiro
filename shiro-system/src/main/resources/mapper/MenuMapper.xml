@@ -23,5 +23,17 @@
         gmt_modified,
         menu_id, menu_name, icon, type, url, parent_id, permis
     </sql>
+    <select id="selectMenuByUserId" parameterType="java.lang.Long" resultMap="com.xlx.system.dao.DeptMapper.BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu m
+        join sys_role_menu rm
+        ON m.menu_id = rm.menu_id
+
+        JOIN sys_user_role ur
+        ON rm.role_id = ur.role_id
+        and ur.user_id = #{userId}
+        AND m.`status` = 1
+    </select>
 
 </mapper>

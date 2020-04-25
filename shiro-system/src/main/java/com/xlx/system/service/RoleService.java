@@ -3,6 +3,8 @@ package com.xlx.system.service;
 import com.xlx.system.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Set;
+
 /**
  * <p>
  *  服务类
@@ -13,4 +15,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface RoleService extends IService<Role> {
 
+    
+    
+    Set<String> listRolesByUserId(Long userId);
+    Set<String> listRolesByUserName(String userName);
 }

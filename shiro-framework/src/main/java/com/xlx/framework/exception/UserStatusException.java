@@ -7,10 +7,10 @@ import com.xlx.common.exception.UserException;
  *
  * @author xielx at 2020/4/24 22:07
  */
-public class UserStatusExistException extends UserException {
+public class UserStatusException extends UserException {
     
     
-    public UserStatusExistException(String message){
+    public UserStatusException(String message){
         super(message);
     }
 

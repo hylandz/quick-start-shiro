@@ -59,7 +59,7 @@ spring:
 
 # mybatis-plus
 mybatis-plus:
-  mapper-locations: classpath:/mapper/*Mapper.xml
+  mapper-locations: classpath:/shiro-system/mapper/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.xlx.system.entity
   #typeEnumsPackage:
@@ -82,3 +82,5 @@ mybatis-plus:
       # 逻辑未删除值(默认为 0)
       logic-not-delete-value: 0
 
+quick-start-shiro:
+  version: 1.0.0

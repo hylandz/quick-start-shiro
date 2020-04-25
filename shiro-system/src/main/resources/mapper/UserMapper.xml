@@ -33,4 +33,6 @@
         user_id, dept_id, avatar_name, avatar_url, user_name, user_real, password, salt, token, gender, birth, email, phone, del_flag, login_ip, login_date
     </sql>
 
+
+
 </mapper>

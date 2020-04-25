@@ -17,6 +17,7 @@ import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -50,7 +51,7 @@ public class ShiroConfig {
         EhCacheManager em = new EhCacheManager();
         
         if (cacheManager == null){
-            em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
+            em.setCacheManagerConfigFile("classpath:ehcache/ehcache-shiro.xml");
         }else {
             em.setCacheManager(cacheManager);
         }
@@ -77,7 +78,7 @@ public class ShiroConfig {
      */
     @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher(){
-        HashedCredentialsMatcher  credentialsMatcher = new RetryLimitHashedCredentialsMatcher();
+        HashedCredentialsMatcher  credentialsMatcher = new RetryLimitHashedCredentialsMatcher(ehCacheManager());
         credentialsMatcher.setHashAlgorithmName("md5");
         credentialsMatcher.setHashIterations(2);
         credentialsMatcher.setStoredCredentialsHexEncoded(true);
@@ -154,9 +155,9 @@ public class ShiroConfig {
      * @param realm UserRealm
      * @return SecurityManager
      */
-    @Bean
+    @Bean("securityManager")
     public SecurityManager securityManager(Realm realm){
-        DefaultSecurityManager securityManager = new DefaultSecurityManager();
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // Realm
         securityManager.setRealm(realm);
         // 记住我管理器
@@ -173,7 +174,7 @@ public class ShiroConfig {
      * 自定义验证码验证过滤器
      * @return  CaptchaValidateFilter
      */
-    @Bean
+    //@Bean
     public CaptchaValidateFilter captchaValidateFilter(){
         return new CaptchaValidateFilter();
     }

@@ -14,10 +14,21 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        status,
+        `status`,
         gmt_create,
         gmt_modified,
         role_id, role_key, role_name
     </sql>
 
+    <select id="selectRolesByUserId" resultType="java.lang.String">
+        SELECT DISTINCT r.role_key
+        FROM sys_role r
+                 INNER JOIN sys_user_role ur ON r.role_id = ur.role_id
+            AND ur.user_id = #{userId}
+            AND r.`status` = 1
+    </select>
+    <select id="selectRolesByUserName" resultType="java.lang.String">
+
+
+    </select>
 </mapper>

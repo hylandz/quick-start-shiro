@@ -3,6 +3,9 @@ package com.xlx.system.service;
 import com.xlx.system.entity.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.validation.constraints.NotNull;
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -13,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface MenuService extends IService<Menu> {
 
+    
+    List<Menu> listMenuByUserId(Long id);
 }
