@@ -1,6 +1,9 @@
 package com.xlx.admin.controller.system;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.xlx.framework.util.MenuUtil;
 import com.xlx.framework.util.ShiroUtil;
+import com.xlx.system.entity.Menu;
 import com.xlx.system.entity.User;
 import com.xlx.system.service.MenuService;
 import com.xlx.system.service.RoleService;
@@ -10,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,11 +35,15 @@ public class IndexController {
     public String index(ModelMap modelMap){
         User currentUser = ShiroUtil.getCurrentUser();
         log.info("currentUser:{}",currentUser);
-        Set<String> roles = roleService.listRolesByUserId(currentUser.getUserId());
-        Set<String> permissions = menuService.listMenuPermission(currentUser.getUserId());
+        List<Menu> menus;
+        if (currentUser.isAdmin()){
+           menus = menuService.list(new QueryWrapper<Menu>().eq("`status`","1"));
+        }else {
+            menus = menuService.listMenuByUserId(currentUser.getUserId());
+        }
         modelMap.put("user",currentUser);
+        modelMap.put("menus", MenuUtil.sortedMenus(menus,0));
         modelMap.put("roles",roles);
-        modelMap.put("permissions",permissions);
         return "index";
     }
 }

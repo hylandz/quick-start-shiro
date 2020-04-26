@@ -1,6 +1,7 @@
 package com.xlx.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -8,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -44,7 +47,7 @@ public class Menu extends BaseEntity<Menu> {
     /**
      * 菜单类型,菜单:1;按钮:0
      */
-    private Boolean type;
+    private Integer type;
 
     /**
      * 资源url
@@ -61,6 +64,12 @@ public class Menu extends BaseEntity<Menu> {
      */
     private String permis;
 
+    /**
+     * 子菜单
+     */
+    @TableField(exist = false)
+    private List<Menu> children = new ArrayList<>();
+    
 
     @Override
     protected Serializable pkVal() {

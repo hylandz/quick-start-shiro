@@ -46,6 +46,8 @@
                       ON rm.role_id = ur.role_id
                           and ur.user_id = #{userId}
                           AND m.`status` = 1
+                          And m.permis is not null
+
     </select>
 
 </mapper>

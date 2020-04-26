@@ -10,6 +10,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * <p>
@@ -117,6 +118,12 @@ public class User extends BaseEntity<User> {
         return this.userName + this.salt;
     }
     
+    public boolean isAdmin(){
+        return isAdmin(userId);
+    }
+    public static boolean isAdmin(Long userId){
+        return Objects.equals(1L,userId);
+    }
 
     @Override
     protected Serializable pkVal() {
