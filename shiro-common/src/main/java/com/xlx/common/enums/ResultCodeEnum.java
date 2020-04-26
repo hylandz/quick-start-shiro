@@ -1,6 +1,5 @@
 package com.xlx.common.enums;
 
-import lombok.Data;
 import lombok.Getter;
 
 /**
@@ -17,7 +16,8 @@ public enum ResultCodeEnum {
     AUTHENTICATED_ERROR(false,20004,"用户认证失败"),
     CREDENTIALS_ERROR(false,20005,"用户名或密码错误"),
     ACCOUNT_NOT_EXISTS(false,20006,"账号不存在"),
-    ACCOUNT_LOCKED(false,20007,"账号被锁定,请联系管理员"),
+    ACCOUNT_DISABLED(false,20007,"账号被锁定,请联系管理员"),
+    UNAUTHORIZED_ERROR(false,21000,"您没有该权限"),
     ;
     
     @Getter

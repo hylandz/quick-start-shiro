@@ -1,6 +1,7 @@
 package com.xlx.common.dto;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
 
@@ -10,16 +11,17 @@ import javax.validation.constraints.NotNull;
  * @author xielx at 2020/4/25 20:34
  */
 @Data
+@ToString
 public class LoginDTO {
     
-    @NotNull
+    @NotNull(message = "用户名不能为空")
     private String username;
     
-    @NotNull
+    @NotNull(message = "密码不能为空")
     private String password;
     
-    private Boolean rememberMe;
+    private Boolean rememberMe = Boolean.FALSE;
     
-    @NotNull
-    private String verifyCode;
+    @NotNull(message = "验证码不能为空")
+    private String validateCode;
 }

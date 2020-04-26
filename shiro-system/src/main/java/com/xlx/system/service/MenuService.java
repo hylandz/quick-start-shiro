@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -17,5 +18,7 @@ import java.util.List;
 public interface MenuService extends IService<Menu> {
 
     
-    List<Menu> listMenuByUserId(Long id);
+    List<Menu> listMenuByUserId(@NotNull Long id);
+    
+    Set<String> listMenuPermission(@NotNull Long id);
 }

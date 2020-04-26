@@ -29,12 +29,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     private RoleMapper roleMapper;
     
     @Override
-    public Set<String> listRolesByUserId(@NotNull Long userId) {
+    public Set<String> listRolesByUserId(Long userId) {
         return roleMapper.selectRolesByUserId(userId);
     }
     
     @Override
-    public Set<String> listRolesByUserName(@NotNull String userName) {
+    public Set<String> listRolesByUserName(String userName) {
         return roleMapper.selectRolesByUserName(userName);
     }
 }

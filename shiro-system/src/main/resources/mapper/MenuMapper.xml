@@ -4,16 +4,16 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.xlx.system.entity.Menu">
-        <id column="menu_id" property="menuId" />
-    <result column="status" property="status" />
-    <result column="gmt_create" property="gmtCreate" />
-    <result column="gmt_modified" property="gmtModified" />
-        <result column="menu_name" property="menuName" />
-        <result column="icon" property="icon" />
-        <result column="type" property="type" />
-        <result column="url" property="url" />
-        <result column="parent_id" property="parentId" />
-        <result column="permis" property="permis" />
+        <id column="menu_id" property="menuId"/>
+        <result column="status" property="status"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="icon" property="icon"/>
+        <result column="type" property="type"/>
+        <result column="url" property="url"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="permis" property="permis"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -23,7 +23,8 @@
         gmt_modified,
         menu_id, menu_name, icon, type, url, parent_id, permis
     </sql>
-    <select id="selectMenuByUserId" parameterType="java.lang.Long" resultMap="com.xlx.system.dao.DeptMapper.BaseResultMap">
+    <select id="selectMenuByUserId" parameterType="java.lang.Long"
+            resultMap="com.xlx.system.dao.DeptMapper.BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_menu m
@@ -34,6 +35,17 @@
         ON rm.role_id = ur.role_id
         and ur.user_id = #{userId}
         AND m.`status` = 1
+    </select>
+    <select id="selectMenuOfPermission" resultType="java.lang.String">
+        select DISTINCT m.permis
+        from sys_menu m
+                 join sys_role_menu rm
+                      ON m.menu_id = rm.menu_id
+
+                 JOIN sys_user_role ur
+                      ON rm.role_id = ur.role_id
+                          and ur.user_id = #{userId}
+                          AND m.`status` = 1
     </select>
 
 </mapper>

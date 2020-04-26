@@ -34,15 +34,12 @@ import java.util.stream.Collectors;
 public class UserRealm extends AuthorizingRealm {
     
     @Autowired
-    @Lazy
     private RoleService roleService;
     
     @Autowired
-    @Lazy
     private UserService userService;
     
     @Autowired
-    @Lazy
     private MenuService menuService;
     
     /**
@@ -95,7 +92,7 @@ public class UserRealm extends AuthorizingRealm {
     
         if (user == null){
             //UnknownAccountException
-            throw new UserNotExistException("用户不存在");
+            throw new UnknownAccountException("用户不存在");
         }
         
         // 用户被禁用/锁定

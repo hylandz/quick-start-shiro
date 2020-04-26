@@ -1,5 +1,6 @@
 package com.xlx.admin.controller.system;
 
+import com.alibaba.fastjson.JSON;
 import com.xlx.common.dto.LoginDTO;
 import com.xlx.common.dto.Result;
 import com.xlx.system.service.UserService;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 /**
  * login
  *
@@ -22,32 +26,29 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Controller
 @Slf4j
-public class LoginController extends BaseController{
-
-
+public class LoginController extends BaseController {
+    
+    
     @Autowired
     private UserService userService;
-
-
+    
+    
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
     
     @PostMapping("/login")
     @ResponseBody
-    public Result<Object> login(LoginDTO loginDTO){
-    
-        UsernamePasswordToken token = new UsernamePasswordToken(loginDTO.getUsername(),loginDTO.getPassword(),loginDTO.getRememberMe());
+    public Result<Object> login(@Valid LoginDTO loginDTO) {
+        
+        log.info("前台登录参数:{}", loginDTO);
+        UsernamePasswordToken token = new UsernamePasswordToken(loginDTO.getUsername(), loginDTO.getPassword(), loginDTO.getRememberMe());
         Subject subject = getSubject();
-        try{
-            subject.login(token);
-            return Result.ok().message("登录成功");
-        }catch (CredentialsException cre){
-            throw new CredentialsException("用户名或密码错误");
-        }catch (AuthenticationException auth){
-            throw new AuthenticationException("用户名或密码错误");
-        }
+        
+        subject.login(token);
+        return Result.ok().message("登录成功");
+        
         
     }
 }

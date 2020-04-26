@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -25,7 +26,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     private MenuMapper menuMapper;
     
     @Override
-    public List<Menu> listMenuByUserId(@NotNull Long id) {
+    public List<Menu> listMenuByUserId(Long id) {
         return menuMapper.selectMenuByUserId(id);
+    }
+    
+    @Override
+    public Set<String> listMenuPermission(Long id) {
+        return menuMapper.selectMenuOfPermission(id);
     }
 }

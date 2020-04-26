@@ -1,422 +1,148 @@
-<style>
-    #febs-index .welcome-info {
-        border: 1px solid #f1f1f1;
-        margin-bottom: .5rem;
-        padding: .5rem;
-    }
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>若依管理系统首页</title>
+    <meta name="keywords" content="若依管理系统首页">
+    <meta name="description" content="若依管理系统首页">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link th:href="@{favicon.ico}" rel="stylesheet"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/animate.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/ruoyi/css/ry-ui.css?v=3.0.0}" rel="stylesheet"/>
+    <style type="text/css">
+        .nav > li:hover .dropdown-menu {display: block;}
+        #content-main.max { height: calc(100% - 110px); overflow: hidden; width: 100%; height: 100%; left: 0px; position: absolute; top: 0px; z-index: 9998; margin: 0; }
+    </style>
+</head>
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden" th:classappend="${@config.getKey('sys.index.skinName')}">
+<div id="wrapper">
 
-    #febs-index .welcome-info-wrapper {
-        padding: .2rem;
-        display: inline-block
-    }
-
-    #febs-index .welcome-info-wrapper .user-header {
-        display: inline-block;
-        vertical-align: middle
-    }
-
-    #febs-index .welcome-info-wrapper .user-header img {
-        width: 5rem;
-        margin: .5rem 1rem;
-        border-radius: 50%
-    }
-
-    #febs-index .welcome-info-wrapper .user-info {
-        display: inline-block;
-        vertical-align: middle
-    }
-
-    #febs-index .welcome-info-wrapper .user-info .random-message {
-        font-size: 1rem;
-        margin-bottom: .2rem;
-        max-width: 21rem
-    }
-
-    #febs-index .welcome-info-wrapper .user-info .user-dept, #febs-index .welcome-info-wrapper .user-info .user-login-info {
-        color: rgba(0, 0, 0, 0.45);
-    }
-
-    #febs-index .login-count-table {
-        width: 100%;
-        margin: 1rem;
-    }
-
-    #febs-index .login-count-table .count {
-        padding-top: .8rem;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #1890ff
-    }
-
-    #febs-index .project-table {
-        padding: .5rem;
-        border: 1px solid #f1f1f1;
-        width: 100%
-    }
-
-    #febs-index .project-table-td {
-        padding: .5rem 0.7rem;
-        border: 1px solid #f1f1f1;
-    }
-
-    #febs-index .project-table-td a {
-        color: #42b983;
-        font-size: .9rem;
-        font-weight: 600;
-    }
-
-    #febs-index .project-desc {
-        color: rgba(0, 0, 0, 0.45);
-    }
-</style>
-<div class="layui-fluid layui-anim febs-anim-up" id="febs-index" lay-title="系统首页">
-    <div class="layui-row layui-col-space8 febs-container">
-        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-            <div class="layui-card">
-                <div class="layui-card-body layui-anim layui-anim-fadein">
-                    <div class="layui-row welcome-info">
-                        <div class="layui-col-md6 layui-col-sm12 layui-col-xs12">
-                            <div class="layui-row welcome-info-wrapper">
-                                <div class="user-header">
-                                    <img alt="头像" id="user-avatar" data-th-src="@{febs/images/avatar/empty.jpg}">
-                                </div>
-                                <div class="user-info">
-                                    <div class="layui-row">
-                                        <div class="random-message">
-                                            <span id="welcome-message"></span>
-                                        </div>
-                                        <div class="user-dept">
-                                            <span id="user-dept"></span> | <span id="user-role"></span>
-                                        </div>
-                                        <div class="user-login-info">
-                                            上次登录时间：<span id="last-login-time">2019-05-23 18:45:12</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-col-md6 layui-col-sm12 layui-col-xs12">
-                            <div class="layui-col-md-offset5">
-                                <table class="login-count-table">
-                                    <tr>
-                                        <td>今日IP</td>
-                                        <td>今日访问</td>
-                                        <td>总访问量</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="count" id="today-ip">
-                                            0
-                                        </td>
-                                        <td class="count" id="today-visit-count">
-                                            0
-                                        </td>
-                                        <td class="count" id="total-visit-count">
-                                            0
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+    <!--左侧导航开始-->
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="nav-close">
+            <i class="fa fa-times-circle"></i>
+        </div>
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element" th:object="${user}"> <span>
+                         <img th:src="(${#strings.isEmpty(avatarUrl)}) ? @{/img/profile.jpg} : @{/profile/avatarUrl/} + ${avatarUrl}" alt="image" class="img-circle" height="60" width="60" /></span>
+                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                          <span class="clear"><span class="block m-t-xs"><strong class="font-bold" th:text="${userName}">用户</strong></span>
+                         <span class="text-muted text-xs block"><span th:text="${dept ? deptName}">部门</span> <b class="caret"></b></span> </span> </a>
+                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                             <li><a class="menuItem" th:href="@{/system/user/profile}">个人信息</a></li>
+                             <li class="divider"></li>
+                             <li><a th:href="@{/logout}">退出</a></li>
+                         </ul>
                     </div>
-                </div>
-            </div>
+                </li>
+                 <li class="active">
+                    <a href="index.html"><i class="fa fa-home"></i> <span class="nav-label">主页</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li class="active"><a class="menuItem" th:href="@{/system/main}">了解若依</a></li>
+                    </ul>
+                </li>
+                <li th:each="menu : ${menus}">
+                	<a href="#">
+                		<i class="fa fa fa-bar-chart-o" th:class="${menu.icon}"></i>
+                    	<span class="nav-label" th:text="${menu.menuName}">一级菜单</span> 
+                    	<span class="fa arrow"></span>
+                	</a>
+                   <ul class="nav nav-second-level collapse">
+						<li th:each="cmenu : ${menu.children}">
+							<a th:if="${#lists.isEmpty(cmenu.children)}" class="menuItem" th:utext="${cmenu.menuName}" th:href="@{${cmenu.url}}">二级菜单</a>
+							<a th:if="${not #lists.isEmpty(cmenu.children)}" href="#">[[${cmenu.menuName}]]<span class="fa arrow"></span></a>
+							<ul th:if="${not #lists.isEmpty(cmenu.children)}" class="nav nav-third-level">
+								<li th:each="emenu : ${cmenu.children}"><a class="menuItem" th:text="${emenu.menuName}" th:href="@{${emenu.url}}">三级菜单</a></li>
+							</ul>
+						</li>
+					</ul>
+                </li>
+            </ul>
         </div>
-        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
-            <div class="layui-card">
-                <div class="layui-card-body">
-                    <div id="chart" style="height: 350px"></div>
+    </nav>
+    <!--左侧导航结束-->
+    
+    <!--右侧部分开始-->
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation"
+                 style="margin-bottom: 0">
+                <div class="navbar-header">
+
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-default " href="#" title="收起菜单">
+                    	<i class="fa fa-bars"></i>
+                    </a>
+                    <form role="search" class="navbar-form-custom" method="post" action="">
+                        <div class="form-group">
+                            <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search">
+                        </div>
+                    </form>
                 </div>
-            </div>
+                <ul class="nav navbar-top-links navbar-right welcome-message">
+	                <li>
+	                    <span class="m-r-sm text-muted">欢迎来到若依管理后台.</span>
+	                </li>
+	                <li><a id="fullScreen"><i class="fa fa-arrows-alt"></i>全屏</a></li>
+                    <li><a th:href="@{logout}"><i class="fa fa-sign-out"></i>退出</a></li>
+                </ul>
+            </nav>
         </div>
-        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
-            <div class="layui-card">
-                <div class="layui-card-body">
-                    <table class="project-table">
-                        <tr>
-                            <td style="padding: .8rem;">进行中的项目</td>
-                            <td style="padding: .8rem;text-align: right">
-                                <a target="_blank" href="https://github.com/wuyouzhuguli?tab=repositories">所有项目</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="project-table-td">
-                                <div class="layui-row">
-                                    <div class="layui-col-md12 layui-col-xs12">
-                                        <div class="layui-row">
-                                            <div class="layui-col-md12">
-                                                <a target="_blank" href="https://github.com/wuyouzhuguli/FEBS-Shiro">FEBS
-                                                    Shiro</a>
-                                            </div>
-                                            <div class="project-desc">
-                                                Spring Boot 2.0.4 & Shiro1.4.0 权限管理系统。
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="project-table-td">
-                                <div class="layui-row">
-                                    <div class="layui-col-md12 layui-col-xs12">
-                                        <div class="layui-row">
-                                            <div class="layui-col-md12">
-                                                <a target="_blank" href="https://github.com/wuyouzhuguli/FEBS-Security">FEBS
-                                                    Security</a>
-                                            </div>
-                                            <div class="project-desc">
-                                                Spring Boot 2.0.4 & Spring Security 5.0.7 权限管理系统。
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="project-table-td">
-                                <div class="layui-row">
-                                    <div class="layui-col-md12 layui-col-xs12">
-                                        <div class="layui-row">
-                                            <div class="layui-col-md12">
-                                                <a target="_blank" href="https://github.com/wuyouzhuguli/FEBS-Vue">FEBS
-                                                    Vue</a>
-                                            </div>
-                                            <div class="project-desc">
-                                                FEBS-Shiro前后端分离版本，前端架构采用Vue全家桶。
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="project-table-td">
-                                <div class="layui-row">
-                                    <div class="layui-col-md12 layui-col-xs12">
-                                        <div class="layui-row">
-                                            <div class="layui-col-md12">
-                                                <a target="_blank" href="https://github.com/wuyouzhuguli/FEBS-Actuator">FEBS
-                                                    Actuator</a>
-                                            </div>
-                                            <div class="project-desc">
-                                                使用Spring Boot Admin 2.0.2构建，用于监控FEBS。
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="project-table-td">
-                                <div class="layui-row">
-                                    <div class="layui-col-md12 layui-col-xs12">
-                                        <div class="layui-row">
-                                            <div class="layui-col-md12">
-                                                <a target="_blank" href="https://github.com/wuyouzhuguli/SpringAll">SpringAll</a>
-                                            </div>
-                                            <div class="project-desc">
-                                                循序渐进学习Spring Boot、Spring Cloud与Spring Security。
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="project-table-td">
-                                <div class="layui-row">
-                                    <div class="layui-col-md12 layui-col-xs12">
-                                        <div class="layui-row">
-                                            <div class="layui-col-md12">
-                                                <a target="_blank" href="https://github.com/wuyouzhuguli/Conciseness">Conciseness</a>
-                                            </div>
-                                            <div class="project-desc">
-                                                Leanote博客主题Conciseness。
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="project-table-td">
-                                <div class="layui-row">
-                                    <div class="layui-col-md12 layui-col-xs12">
-                                        <div class="layui-row">
-                                            <div class="layui-col-md12">
-                                                <a target="_blank"
-                                                   href="https://github.com/wuyouzhuguli/Material-Design">Material
-                                                    Design</a>
-                                            </div>
-                                            <div class="project-desc">
-                                                Leanote博客主题Material Design。
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="project-table-td">
-                                <div class="layui-row">
-                                    <div class="layui-col-md12 layui-col-xs12">
-                                        <div class="layui-row">
-                                            <div class="layui-col-md12">
-                                                <a target="_blank"
-                                                   href="https://github.com/wuyouzhuguli/Summer">Summer</a>
-                                            </div>
-                                            <div class="project-desc">
-                                                Leanote博客主题🌴Summer。
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+        <div class="row content-tabs">
+            <button class="roll-nav roll-left tabLeft">
+                <i class="fa fa-backward"></i>
+            </button>
+            <nav class="page-tabs menuTabs">
+                <div class="page-tabs-content">
+                    <a href="javascript:;" class="active menuTab" data-id="/system/main">首页</a>
                 </div>
+            </nav>
+            <button class="roll-nav roll-right tabRight">
+                <i class="fa fa-forward"></i>
+            </button>
+            <div class="btn-group roll-nav roll-right">
+                <button class="dropdown J_tabClose" data-toggle="dropdown">
+                                                                          页签操作<span class="caret"></span>
+                </button>
+                <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                     <li><a class="tabCloseCurrent" href="javascript:void();">关闭当前</a></li>
+                     <li><a class="tabCloseOther" href="javascript:void();">关闭其他</a></li>
+					 <li><a class="tabCloseAll" href="javascript:void();">全部关闭</a></li>
+					 <li><a class="tabMaxCurrent" href="javascript:void();">全屏显示</a></li>
+                </ul>
             </div>
+            <a href="#" class="roll-nav roll-right tabReload"><i class="fa fa-refresh"></i> 刷新</a>
+        </div>
+        
+        <a id="ax_close_max" class="ax_close_max" href="#" title="关闭全屏"> <i class="fa fa-times-circle-o"></i> </a>
+                    
+        <div class="row mainContent" id="content-main">
+            <iframe class="RuoYi_iframe" name="iframe0" width="100%" height="100%" data-id="/system/main"
+                    th:src="@{/system/main}" frameborder="0" seamless></iframe>
+        </div>
+        <div class="footer">
+            <div class="pull-right">© [[${copyrightYear}]] RuoYi Copyright </div>
         </div>
     </div>
+    <!--右侧部分结束-->
 </div>
-<script data-th-inline="javascript" type="text/javascript">
-    layui.use(['apexcharts', 'febs', 'jquery', 'util'], function () {
-        var $ = layui.jquery,
-            util = layui.util,
-            $view = $('#febs-index'),
-            febs = layui.febs;
-
-        febs.get(ctx + 'index/' + currentUser.username, null, function (r) {
-            handleSuccess(r.data);
-        });
-
-        function handleSuccess(data) {
-            var hour = new Date().getHours();
-            var time = hour < 6 ? '早上好' : (hour <= 11 ? '上午好' : (hour <= 13 ? '中午好' : (hour <= 18 ? '下午好' : '晚上好')));
-            var welcomeArr = [
-                '喝杯咖啡休息下吧☕',
-                '要不要和朋友打局LOL',
-                '今天又写了几个Bug呢',
-                '今天在群里吹水了吗',
-                '今天吃了什么好吃的呢',
-                '今天您微笑了吗😊',
-                '今天帮助别人了吗',
-                '准备吃些什么呢',
-                '周末要不要去看电影？'
-            ];
-            var index = Math.floor((Math.random() * welcomeArr.length));
-            var welcomeMessage = time + '，<a id="febs-index-user">' + currentUser.username + '</a>，' + welcomeArr[index];
-            $view.find('#today-ip').text(data.todayIp).end()
-                .find('#today-visit-count').text(data.todayVisitCount).end()
-                .find('#total-visit-count').text(data.totalVisitCount).end()
-                .find('#user-dept').text(currentUser.deptName ? currentUser.deptName : '暂无所属部门').end()
-                .find('#user-role').text(currentUser.roleName ? currentUser.roleName : '暂无角色').end()
-                .find('#last-login-time').text(currentUser.lastLoginTime ? currentUser.lastLoginTime : '第一次访问系统').end()
-                .find('#welcome-message').html(welcomeMessage).end()
-                .find('#user-avatar').attr('src', ctx + "febs/images/avatar/" + currentUser.avatar);
-
-            var currentTime = new Date().getTime();
-            var yourVisitCount = [];
-            var totalVisitCount = [];
-            var lastTenDays = [
-                util.toDateString(new Date(currentTime - 1000 * 9 * 86400), 'MM-dd'),
-                util.toDateString(new Date(currentTime - 1000 * 8 * 86400), 'MM-dd'),
-                util.toDateString(new Date(currentTime - 1000 * 7 * 86400), 'MM-dd'),
-                util.toDateString(new Date(currentTime - 1000 * 6 * 86400), 'MM-dd'),
-                util.toDateString(new Date(currentTime - 1000 * 5 * 86400), 'MM-dd'),
-                util.toDateString(new Date(currentTime - 1000 * 4 * 86400), 'MM-dd'),
-                util.toDateString(new Date(currentTime - 1000 * 3 * 86400), 'MM-dd'),
-                util.toDateString(new Date(currentTime - 1000 * 2 * 86400), 'MM-dd'),
-                util.toDateString(new Date(currentTime - 1000 * 86400), 'MM-dd'),
-                util.toDateString(new Date(currentTime), 'MM-dd')
-            ];
-
-
-            layui.each(lastTenDays, function (k, i) {
-                var contain = false;
-                layui.each(data.lastSevenUserVisitCount, function (key, item) {
-                    if (i === item.days) {
-                        yourVisitCount.push(item.count);
-                        contain = true;
-                    }
-                });
-                if (!contain) yourVisitCount.push(0);
-                contain = false;
-                layui.each(data.lastSevenVisitCount, function (key, item) {
-                    if (i === item.days) {
-                        totalVisitCount.push(item.count);
-                        contain = true;
-                    }
-                });
-                if (!contain) totalVisitCount.push(0);
-            });
-
-            var options = {
-                chart: {
-                    height: 350,
-                    type: 'bar',
-                    toolbar: {
-                        show: false
-                    }
-                },
-                plotOptions: {
-                    bar: {
-                        horizontal: false,
-                        columnWidth: '32rem'
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    show: true,
-                    width: 1,
-                    colors: ['transparent']
-                },
-                series: [{
-                    name: '总数',
-                    data: totalVisitCount
-                }, {
-                    name: '您',
-                    data: yourVisitCount
-                }],
-                xaxis: {
-                    categories: lastTenDays,
-                    axisTicks: {
-                        show: true
-                    },
-                    axisBorder: {
-                        show: true,
-                        color: '#f1f1f1'
-                    }
-                },
-                fill: {
-                    opacity: 1
-                },
-                title: {
-                    text: '近10天系统访问记录',
-                    align: 'left',
-                    style: {
-                        color: 'rgba(0, 0, 0, .65)'
-                    }
-                },
-                tooltip: {
-                    y: {
-                        formatter: function (val) {
-                            return "访问次数 " + val + " 次"
-                        }
-                    }
-                },
-                grid: {
-                    row: {
-                        colors: ['transparent', 'transparent'],
-                        opacity: 0.2
-                    },
-                    borderColor: '#f1f1f1'
-                }
-            };
-
-            new ApexCharts(
-                document.querySelector("#chart"),
-                options
-            ).render();
-        }
-
-        $view.on('click', '#febs-index-user',function () {
-            febs.navigate("/user/profile");
-        })
-
-    });
-</script>
+<!-- 全局js -->
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script src="http://tajs.qq.com/stats?sId=62048022"></script>
+<script th:src="@{/ruoyi/js/ry-ui.js?v=3.0.0}"></script>
+<script th:src="@{/ruoyi/index.js}"></script>
+<script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
+</body>
+</html>

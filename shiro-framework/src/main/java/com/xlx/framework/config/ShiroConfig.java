@@ -226,7 +226,7 @@ public class ShiroConfig {
         // 登录url
         shiroFilter.setLoginUrl("/login");
         // 登录成功后跳转url
-        //shiroFilter.setSuccessUrl("/index");
+        shiroFilter.setSuccessUrl("/index");
         // 未授权跳转url
         shiroFilter.setUnauthorizedUrl("/unauth");
         
@@ -234,11 +234,15 @@ public class ShiroConfig {
         LinkedHashMap<String, String> filterChainMap= new LinkedHashMap<>();
         
         // 不经过滤器
-        filterChainMap.put("/favicon.ico**", "anon");
+        filterChainMap.put("/favicon.ico**","anon");
+        filterChainMap.put("/ruoyi.png**","anon");
+        filterChainMap.put("/ajax/lib/**","anon");
         filterChainMap.put("/css/**","anon");
-        filterChainMap.put("/js/**","anon");
         filterChainMap.put("/fonts/**","anon");
         filterChainMap.put("/img/**","anon");
+        filterChainMap.put("/js/**","anon");
+        filterChainMap.put("/ruoyi/**", "anon");
+        filterChainMap.put("/ajax/**","anon");
         filterChainMap.put("/druid/**","anon");
         filterChainMap.put("/docs/**","anon");
         filterChainMap.put("/captcha/captchaImage**","anon");
