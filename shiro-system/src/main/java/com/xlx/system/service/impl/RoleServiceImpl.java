@@ -25,16 +25,14 @@ import java.util.Set;
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
     
-    @Autowired
-    private RoleMapper roleMapper;
     
     @Override
     public Set<String> listRolesByUserId(Long userId) {
-        return roleMapper.selectRolesByUserId(userId);
+        return this.baseMapper.selectRolesByUserId(userId);
     }
     
     @Override
     public Set<String> listRolesByUserName(String userName) {
-        return roleMapper.selectRolesByUserName(userName);
+        return this.baseMapper.selectRolesByUserName(userName);
     }
 }

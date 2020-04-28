@@ -535,32 +535,30 @@
             },
             // 保存结果弹出msg刷新table表格
             ajaxSuccess: function (result) {
-            	if (result.code == web_status.SUCCESS) {
-                	$.modal.msgSuccess(result.msg);
+            	if (result.code === web_status.SUCCESS) {
+                	$.modal.msgSuccess(result.message);
             		$.table.refresh();
                 } else {
-                	$.modal.alertError(result.msg);
+                	$.modal.alertError(result.message);
                 }
             	$.modal.closeLoading();
             },
             // 保存结果提示msg
             saveSuccess: function (result) {
-            	if (result.code == web_status.SUCCESS) {
-            		$.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
+            	if (result.code === web_status.SUCCESS) {
+            		$.modal.msgReload(result.message + ",正在刷新数据请稍后……", modal_status.SUCCESS);
                 } else {
-                	$.modal.alertError(result.msg);
+                	$.modal.alertError(result.message);
                 }
             	$.modal.closeLoading();
             }
         },
         // 校验封装处理
         validate: {
-        	// 判断返回标识是否唯一 false 不存在 true 存在
+        	// 判断返回标识是否唯一 false:提示错误信息,true:正确
         	unique: function (value) {
-            	if (value == "0") {
-                    return true;
-                }
-                return false;
+            	return value === 200;
+
             },
             // 表单验证
             form: function (formId) {
@@ -769,7 +767,7 @@
 
 /** 消息状态码 */
 web_status = {
-    SUCCESS: 0,
+    SUCCESS: 200,
     FAIL: 500
 };
 

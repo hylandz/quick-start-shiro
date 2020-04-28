@@ -1,6 +1,7 @@
 package com.xlx.admin.controller.system;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.xlx.common.util.DateTimeUtil;
 import com.xlx.framework.util.MenuUtil;
 import com.xlx.framework.util.ShiroUtil;
 import com.xlx.system.entity.Menu;
@@ -43,7 +44,12 @@ public class IndexController {
         }
         modelMap.put("user",currentUser);
         modelMap.put("menus", MenuUtil.sortedMenus(menus,0));
-        modelMap.put("roles",roles);
+        modelMap.put("copyrightYear", DateTimeUtil.getCurrentYear());
         return "index";
+    }
+    
+    @GetMapping("/system/main")
+    public String main(){
+        return "main";
     }
 }

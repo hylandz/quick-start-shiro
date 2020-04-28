@@ -83,4 +83,5 @@ mybatis-plus:
       logic-not-delete-value: 0
 
 quick-start-shiro:
+  base-dir: D:\\
   version: 1.0.0

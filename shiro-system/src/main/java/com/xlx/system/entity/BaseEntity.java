@@ -1,7 +1,9 @@
 package com.xlx.system.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -25,12 +27,14 @@ public abstract class BaseEntity<T> implements Serializable {
      */
     @Getter
     @Setter
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
     protected LocalDateTime gmtCreate;
     /**
      * 修改时间
      */
     @Getter
     @Setter
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
     protected LocalDateTime gmtModified;
     
     /**

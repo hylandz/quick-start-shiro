@@ -2,6 +2,7 @@ package com.xlx.system.dao;
 
 import com.xlx.system.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xlx.system.vo.ProfileVO;
 
 import java.util.Set;
 
@@ -15,5 +16,6 @@ import java.util.Set;
  */
 public interface UserMapper extends BaseMapper<User> {
     
+    ProfileVO selectProfileByUserId(Long userId);
     
 }

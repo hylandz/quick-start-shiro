@@ -1,12 +1,14 @@
 package com.xlx.system.service.impl;
 
-import com.xlx.system.entity.User;
-import com.xlx.system.dao.UserMapper;
-import com.xlx.system.service.UserRoleService;
-import com.xlx.system.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xlx.system.dao.UserMapper;
+import com.xlx.system.entity.User;
+import com.xlx.system.service.UserService;
+import com.xlx.system.vo.ProfileVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -18,10 +20,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
-
-
-
     
-
-    
+    @Override
+    public ProfileVO findProfile(@NotNull User user) {
+        return this.baseMapper.selectProfileByUserId(user.getUserId());
+    }
 }

@@ -35,18 +35,18 @@
                     <div class="contact-box">
 	                        <div class="col-sm-4">
 	                            <div class="text-center">
-	                                <img alt="image" class="img-circle m-t-xs img-responsive" th:src="(${user.avatar} == '') ? @{/img/profile.jpg} : @{/profile/avatar/} + ${user.avatar}">
+	                                <img alt="image" class="img-circle m-t-xs img-responsive" th:src="'/img/avatar/' + ${user.avatarUrl} ?: @{/img/avatar/default.jpg}">
 	                                <div class="m-t-xs font-bold">[[${user.loginIp}]]</div>
 	                            </div>
 	                        </div>
 	                        <div class="col-sm-8">
-	                            <h3><strong>[[${user.loginName}]]</strong></h3>
-	                            <p><i class="fa fa-user"></i> [[${user.userName}]] / [[${#strings.defaultString(roleGroup,'无角色')}]]
-	                            <p><i class="fa fa-phone"></i> [[${user.phonenumber}]]</p>
-	                            <p><i class="fa fa-group"></i> [[${user.dept?.deptName}]] / [[${#strings.defaultString(postGroup,'无岗位')}]]</p>
-	                            <p><i class="fa fa-transgender"></i> 性别：[[${user.sex}]]</p>
+	                            <h3><strong>[[${user.avatarName}]]</strong></h3>
+	                            <p><i class="fa fa-user"></i> [[${user.userName}]] / [[${#strings.defaultString(user.roleNames,'无角色')}]]
+	                            <p><i class="fa fa-phone"></i> [[${user.phone}]]</p>
+	                            <p><i class="fa fa-group"></i> [[${user.deptName}]] / [[${#strings.defaultString(user.roleNames,'无岗位')}]]</p>
+	                            <p><i class="fa fa-transgender"></i> 性别：[[${user.gender} == 1 ? '男'  :'女']]</p>
 	                            <p><i class="fa fa-envelope-o"></i> [[${user.email}]]</p>
-	                            <p><i class="fa fa-calendar"></i> [[${#dates.format(user.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</p>
+	                            <p><i class="fa fa-calendar"></i> [[${#strings.replace(user.gmtCreate,'T',' ')}]]</p>
 	                        </div>
 	                        <div class="clearfix"></div>
 	                    </a>
@@ -66,12 +66,12 @@
 	    }
 	    /*用户管理-重置密码*/
 	    function resetPwd() {
-	        var url = ctx + 'system/user/profile/resetPwd/' + userId;
+	        var url = ctx + 'system/user/profile/resetPwd'
 	        $.modal.open("重置密码", url, '800', '500');
 	    }
 	    /*用户管理-头像*/
 	    function avatar() {
-	        var url = ctx + 'system/user/profile/avatar/' + userId;
+	        var url = ctx + 'system/user/profile/avatar'
 	        $.modal.open("修改头像", url);
 	    }
 	</script>

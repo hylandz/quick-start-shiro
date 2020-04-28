@@ -21,17 +21,15 @@ import java.util.*;
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
     
-    @Autowired
-    private MenuMapper menuMapper;
     
     @Override
     public List<Menu> listMenuByUserId(Long id) {
-        return menuMapper.selectMenuByUserId(id);
+        return this.baseMapper.selectMenuByUserId(id);
     }
     
     @Override
     public Set<String> listMenuPermission(Long id) {
-        return menuMapper.selectMenuOfPermission(id);
+        return this.baseMapper.selectMenuOfPermission(id);
     }
     
     

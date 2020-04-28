@@ -23,5 +23,5 @@ public class LoginDTO {
     private Boolean rememberMe = Boolean.FALSE;
     
     @NotNull(message = "验证码不能为空")
-    private String validateCode;
+    private String validateCode = "ccc";
 }

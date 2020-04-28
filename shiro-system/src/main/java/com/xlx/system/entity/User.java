@@ -1,11 +1,14 @@
 package com.xlx.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -97,6 +100,7 @@ public class User extends BaseEntity<User> {
     /**
      * 逻辑删除,0:删除;1:未删除
      */
+    @TableField(value = "del_flag")
     private Integer delFlag;
 
     /**
@@ -107,7 +111,10 @@ public class User extends BaseEntity<User> {
     /**
      * 最后登录时间
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss",style = "GM+8")
     private LocalDateTime loginDate;
+    
     
     
     /**

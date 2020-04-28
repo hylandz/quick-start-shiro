@@ -2,6 +2,9 @@ package com.xlx.system.service;
 
 import com.xlx.system.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xlx.system.vo.ProfileVO;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
+    ProfileVO findProfile(@NotNull User user);
 }
